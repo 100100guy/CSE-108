@@ -6,7 +6,8 @@ public class Animal {
         this.name = name;
         this.age = age;
     }
-    public String toString(){
-        return(this.name + " is a " + getClass().getName()+ " aged " + this.age);
+
+    public String toString() {
+        return (this.name + " is a " + getClass().getName() + " aged " + this.age);
     }
 }

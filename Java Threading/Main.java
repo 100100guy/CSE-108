@@ -9,7 +9,8 @@ class ParallelSquareCounter implements Runnable {
     private int squareCount;
     // you are not allowed to add any more fields
 
-    // you are not allowed to change this constructor, and you are not allowed to add any more constructor
+    // you are not allowed to change this constructor, and you are not allowed to
+    // add any more constructor
     ParallelSquareCounter(int[] numbers, int startIndex) {
         this.numbers = numbers;
         this.startIndex = startIndex;
@@ -20,8 +21,7 @@ class ParallelSquareCounter implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < NUMBER_COUNT; i++) {
-            if (checkPerfectSquare(numbers[startIndex+i]))
-            {
+            if (checkPerfectSquare(numbers[startIndex + i])) {
                 squareCount++;
             }
         }
@@ -31,10 +31,10 @@ class ParallelSquareCounter implements Runnable {
         return squareCount;
     }
 
-    public static boolean checkPerfectSquare(int number)
-    {
-        if(number<0) return false;
-        double sqrt=Math.sqrt(number);
+    public static boolean checkPerfectSquare(int number) {
+        if (number < 0)
+            return false;
+        double sqrt = Math.sqrt(number);
         return ((sqrt - Math.floor(sqrt)) == 0);
     }
 }
@@ -52,15 +52,15 @@ public class Main {
         Thread[] threads = new Thread[THREAD_COUNT];
         // your code here
         for (int i = 0; i < numbers.length; i++) {
-            if(numbers[i]<0){
-                numbers[i]=(-1)*numbers[i];
+            if (numbers[i] < 0) {
+                numbers[i] = (-1) * numbers[i];
             }
         }
-        int division=NUMBER_COUNT/THREAD_COUNT;
+        int division = NUMBER_COUNT / THREAD_COUNT;
         int squareCount = 0;
 
         for (int i = 0; i < THREAD_COUNT; i++) {
-            parallelSquareCounters[i]  = new ParallelSquareCounter(numbers, i*division);
+            parallelSquareCounters[i] = new ParallelSquareCounter(numbers, i * division);
             threads[i] = new Thread(parallelSquareCounters[i]);
             threads[i].start();
         }
@@ -68,8 +68,7 @@ public class Main {
         for (int i = 0; i < THREAD_COUNT; i++) {
             try {
                 threads[i].join();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 System.out.println(e);
             }
         }
@@ -78,11 +77,13 @@ public class Main {
             squareCount += parallelSquareCounters[i].getSquareCount();
         }
 
-       /* for (int i = 0; i < NUMBER_COUNT; i++) {
-            if(ParallelSquareCounter.checkPerfectSquare(numbers[i])==true){
-                System.out.println(numbers[i]);
-            }
-        }*/
+        /*
+         * for (int i = 0; i < NUMBER_COUNT; i++) {
+         * if(ParallelSquareCounter.checkPerfectSquare(numbers[i])==true){
+         * System.out.println(numbers[i]);
+         * }
+         * }
+         */
 
         System.out.println("Square count is : " + squareCount);
     }

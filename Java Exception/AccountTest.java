@@ -11,29 +11,33 @@ interface Account {
     void credit(double amount) throws InvalidAmountException;
 }
 
-class InvalidAmountException extends Exception{
+class InvalidAmountException extends Exception {
     private double amount;
+
     public InvalidAmountException(double a) {
-        amount =a;
+        amount = a;
     }
+
     @Override
-    public String toString(){
-        return "The given amount can’t be negative: "+amount;
+    public String toString() {
+        return "The given amount can’t be negative: " + amount;
     }
 }
 
-class InvalidBalanceException extends Exception{
+class InvalidBalanceException extends Exception {
     private double amount;
+
     public InvalidBalanceException(double a) {
         amount = a;
     }
+
     @Override
-    public String toString(){
-        return "The given amount can’t be less than zero: "+ amount;
+    public String toString() {
+        return "The given amount can’t be less than zero: " + amount;
     }
 }
 
-class SavingsAccount implements Account{
+class SavingsAccount implements Account {
 
     private double currentbalance;
 
@@ -49,25 +53,25 @@ class SavingsAccount implements Account{
     @Override
     public void debit(double amount) throws InvalidAmountException, InvalidBalanceException {
 
-            System.out.println("Debit request: "+ amount );
-            if(amount<0){
-                throw new InvalidAmountException(amount);
-            }
-            if(this.currentbalance-amount<0){
-                throw new InvalidBalanceException(this.currentbalance-amount);
-            }
-            currentbalance-=amount;
+        System.out.println("Debit request: " + amount);
+        if (amount < 0) {
+            throw new InvalidAmountException(amount);
+        }
+        if (this.currentbalance - amount < 0) {
+            throw new InvalidBalanceException(this.currentbalance - amount);
+        }
+        currentbalance -= amount;
 
     }
 
     @Override
     public void credit(double amount) throws InvalidAmountException {
 
-            System.out.println("Credit request: "+ amount);
-            if(amount<0){
-                throw new InvalidAmountException(amount);
-            }
-            currentbalance+=amount;
+        System.out.println("Credit request: " + amount);
+        if (amount < 0) {
+            throw new InvalidAmountException(amount);
+        }
+        currentbalance += amount;
     }
 }
 
@@ -76,77 +80,66 @@ public class AccountTest {
         Account a = new SavingsAccount();
         try {
             a.credit(1000);
-        }
-        catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             System.out.println("Balance: " + a.balance());
         }
 
         try {
             a.credit(-100);
-        }
-        catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             System.out.println("Balance: " + a.balance());
         }
 
         try {
             a.debit(2000);
-        }
-        catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
             System.out.println(e);
-        }
-        catch (InvalidBalanceException e) {
+        } catch (InvalidBalanceException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             System.out.println("Balance: " + a.balance());
         }
 
         try {
             a.debit(200);
-        }
-        catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
             System.out.println(e);
-        }
-        catch (InvalidBalanceException e) {
+        } catch (InvalidBalanceException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             System.out.println("Balance: " + a.balance());
         }
 
         try {
             a.debit(-200);
-        }
-         catch (InvalidAmountException e) {
+        } catch (InvalidAmountException e) {
             System.out.println(e);
         } catch (InvalidBalanceException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             System.out.println("Balance: " + a.balance());
         }
 
     }
 }
 
-/* Output of the main method:
-Credit Request: 1000.0
-Balance: 1000.0
-Credit Request: -100.0
-The given amount can’t be negative: -100.0
-Balance: 1000.0
-Debit Request: 2000.0
-The account balance can’t be less than zero: -1000.0
-Balance: 1000.0
-Debit Request: 200.0
-Balance: 800.0
-Debit Request: -200.0
-The given amount can’t be negative: -200.0
-Balance: 800.0
-*/
+/*
+ * Output of the main method:
+ * Credit Request: 1000.0
+ * Balance: 1000.0
+ * Credit Request: -100.0
+ * The given amount can’t be negative: -100.0
+ * Balance: 1000.0
+ * Debit Request: 2000.0
+ * The account balance can’t be less than zero: -1000.0
+ * Balance: 1000.0
+ * Debit Request: 200.0
+ * Balance: 800.0
+ * Debit Request: -200.0
+ * The given amount can’t be negative: -200.0
+ * Balance: 800.0
+ */

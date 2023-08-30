@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
+
         Player p[] = new Player[5];
         Random r = new Random();
         for (int i = 0; i < 5; i++) {
@@ -24,7 +25,8 @@ public class Main {
         for (int i = 0; i < 2; i++) {
             System.out.println(c[i].getId() + ", " + c[i].getName());
             System.out.println(c[i].getSalary()); // prints the total salary for this club
-            System.out.println(c[i].getMaxSalaryPlayer().getName()); // prints the name of the player with highest salary in this club
+            System.out.println(c[i].getMaxSalaryPlayer().getName()); // prints the name of the player with highest
+                                                                     // salary in this club
         }
     }
 }
